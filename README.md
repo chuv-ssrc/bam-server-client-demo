@@ -63,3 +63,11 @@ $ yarn build                    # Compiles the app into the /public/dist folder
 ```
 
 ### How to deploy
+
+### IGV.js
+
+Track options: [https://github.com/igvteam/igv.js/wiki/Tracks](https://github.com/igvteam/igv.js/wiki/Tracks)
+
+Browser options: [https://github.com/igvteam/igv.js/wiki/Browser](https://github.com/igvteam/igv.js/wiki/Browser)
+
+
