@@ -7,6 +7,7 @@ import $ from 'jquery';
  * @description The browser itself.
  */
 class IgvJs extends React.Component {
+
   constructor() {
     super();
     this._createBrowser = this._createBrowser.bind(this);
@@ -16,9 +17,11 @@ class IgvJs extends React.Component {
   componentDidMount() {
     this._createBrowser(this.props.options);
   }
+
   componentWillUnmount() {
     this._deleteBrowser();
   }
+
   componentWillReceiveProps(newProps) {
     this._deleteBrowser();
     this._createBrowser(newProps.options);
@@ -38,6 +41,7 @@ class IgvJs extends React.Component {
   render() {
     return <div id='igv-browser'></div>;
   }
+
 }
 
 

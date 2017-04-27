@@ -47,9 +47,6 @@ class HomePage extends React.Component {
   render() {
     return (
       <Layout className={css.content}>
-        <p>
-          <br /><br />
-        </p>
         <div>
 
           <RaisedButton label="View BAM" primary={true} style={{margin: 12}}
