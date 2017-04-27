@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/",
+    "page": "./home",
+    "chunk": "main"
+  },
+  {
+    "path": "/error",
+    "page": "./error",
+    "chunk": "main"
+  }
+]
