@@ -33,6 +33,7 @@ const config = {
 
   // The entry point for the bundle
   entry: [
+    '../conf/conf.js',
     /* Material Design Lite (https://getmdl.io) */
     '!!style-loader!css-loader!react-mdl/extra/material.min.css',
     'react-mdl/extra/material.min.js',
@@ -92,6 +93,8 @@ const config = {
         test: /\.jsx?$/,
         include: [
           path.resolve(__dirname, '../src'),
+          path.resolve(__dirname, '../actions'),
+          path.resolve(__dirname, '../utils'),
           path.resolve(__dirname, '../components'),
         ],
         loader: 'babel-loader',
