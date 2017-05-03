@@ -16,7 +16,15 @@ class RestService {
   }
 
   handleError(error) {
-    console.debug("Error: "+ JSON.stringify(error, null, 2));
+    console.debug(error);
+  }
+
+  handleJsonResponse(response) {
+
+  }
+
+  handleTextResponse(response) {
+
   }
 
   ajax(method, path, data) {
@@ -28,15 +36,15 @@ class RestService {
       headers: this.authHeader(),
       body: data ? JSON.stringify(data) : undefined,
     };
-    fetch(url, options)
+    return fetch(url, options)
       .then((response) => {
         console.debug(response);
-        return response.json();
+        return response.text();   // not always! can be text ("Inserted 3 users.")
       })
-      //.then((responseData) => {...})
-      .catch(function(error) {
-        _this.handleError(error);
+      .then((responseData) => {
+        console.debug(responseData);
       })
+      .catch((error) => _this.handleError(error))
     ;
   }
 
@@ -44,7 +52,7 @@ class RestService {
    * Check that the user can access this resource (HEAD request).
    */
   checkBamUrl(path) {
-    return ajax('HEAD', path)
+    return this.ajax('HEAD', path)
       .catch(function(error) {
         throw 'Could not connect: ' + JSON.stringify(error, null, 2);
       });
