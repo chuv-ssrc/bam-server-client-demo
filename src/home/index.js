@@ -4,7 +4,6 @@ import Layout from '../../components/Layout/Layout';
 import css from './styles.css';
 import IgvJs from '../../components/IgvJs';
 import AuthService from '../../utils/AuthService';
-
 import RaisedButton from 'material-ui/RaisedButton';
 
 
@@ -54,7 +53,7 @@ class HomePage extends React.Component {
   }
 
   viewPrivateBam() {
-    this.checkBamUrl().then((response) => {
+    this.checkBamUrl().then(() => {
       let options = { ...this.state.options };
       options.locus = "chr1:761997-762551";
       options.tracks.push({
@@ -77,7 +76,7 @@ class HomePage extends React.Component {
       headers: headers,
     };
     return fetch(url, options).then((response) => {
-      console.log('Authorized:', response);
+      //console.log('Authorized:', response);
     }).catch(function(error) {
       throw 'Could not connect: ' + JSON.stringify(error, null, 2);
     });
@@ -135,7 +134,7 @@ class HomePage extends React.Component {
 
         </div>
         <p>
-          <br /><br />
+          <br/><br/>
         </p>
       </Layout>
     );
@@ -144,7 +143,7 @@ class HomePage extends React.Component {
 }
 
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     loggedIn: state.auth.loggedIn,
   };

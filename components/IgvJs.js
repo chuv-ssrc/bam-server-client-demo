@@ -27,11 +27,18 @@ class IgvJs extends React.Component {
     this._createBrowser(newProps.options);
   }
 
+  _copyOptions(options) {
+    let optionsCopy = {...options};
+    let tracks = [...options.tracks];
+    optionsCopy.tracks = tracks;
+    return optionsCopy;
+  }
+
+  // Mutates options.tracks, so must deep copy the options props
   _createBrowser(options) {
     if (options !== null) {
       let div = $("#igv-browser")[0];
-      console.debug(options)
-      window.igv.createBrowser(div, options);
+      window.igv.createBrowser(div, this._copyOptions(options));
     }
   }
   _deleteBrowser() {
