@@ -14,13 +14,13 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
 
-      // Tracks options: https://github.com/igvteam/igv.js/wiki/Tracks
-
       options: {
+        // Browser options: https://github.com/igvteam/igv.js/wiki/Browser
         showNavigation: true,
         showRuler: true,
         genome: "hg19",
         tracks: [
+          // Tracks options: https://github.com/igvteam/igv.js/wiki/Tracks
           // {
           //   name: "Genes",
           //   type: "annotation",
@@ -48,7 +48,7 @@ class HomePage extends React.Component {
     options.tracks.push({
       url: 'https://data.broadinstitute.org/igvdata/BodyMap/hg19/IlluminaHiSeq2000_BodySites/brain_merged/accepted_hits.bam',
       name: 'Brain (BodyMap)',
-      displayMode: 'EXPANDED',  // 'EXPANDED', 'SQUISHED', 'COLLAPSED'
+      displayMode: 'SQUISHED',  // 'EXPANDED', 'SQUISHED', 'COLLAPSED'
     });
     this.setState({ options });
   }
@@ -58,10 +58,11 @@ class HomePage extends React.Component {
       let options = { ...this.state.options };
       options.locus = "chr1:761997-762551";
       options.tracks.push({
-        url: 'localhost:9000/bam/range/testkey',
-        index: 'localhost:9000/bai/testkey',
+        url: 'http://localhost:9000/bam/range/testkey?token='+ AuthService.getToken(),
+        indexURL: 'http://localhost:9000/bai/testkey?token='+ AuthService.getToken(),
+        type: "alignment",
         name: 'Protected resource!!',
-        displayMode: 'EXPANDED',  // 'EXPANDED', 'SQUISHED', 'COLLAPSED'
+        displayMode: 'SQUISHED',  // 'EXPANDED', 'SQUISHED', 'COLLAPSED'
       });
       this.setState({ options });
     });
@@ -70,13 +71,13 @@ class HomePage extends React.Component {
   checkBamUrl() {
     let url = 'http://localhost:9000/bam/range/testkey';
     let headers = new Headers();
-    headers.append('Authorization', 'Bearer '+AuthService.getToken());
+    headers.append('Authorization', 'Bearer '+ AuthService.getToken());
     let options = {
       method: 'HEAD',
       headers: headers,
     };
     return fetch(url, options).then((response) => {
-      console.log('Successful secure connection:', response);
+      console.log('Authorized:', response);
     }).catch(function(error) {
       throw 'Could not connect: ' + JSON.stringify(error, null, 2);
     });
@@ -89,7 +90,7 @@ class HomePage extends React.Component {
   }
 
   render() {
-    console.debug(this.state.options.tracks)
+    console.debug(this.state.options.tracks.length)
     return (
       <Layout className={css.content}>
         <div>
@@ -129,6 +130,7 @@ class HomePage extends React.Component {
             onClick={this.reset.bind(this)}
             disabled={!this.props.loggedIn}
           />
+
           <IgvJs options={this.state.options} />
 
         </div>

@@ -30,6 +30,7 @@ class IgvJs extends React.Component {
   _createBrowser(options) {
     if (options !== null) {
       let div = $("#igv-browser")[0];
+      console.debug(options)
       window.igv.createBrowser(div, options);
     }
   }

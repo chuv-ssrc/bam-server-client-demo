@@ -12,7 +12,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Header from './Header';
-import Footer from '../Footer/Footer';
+import Footer from './Footer';
 import css from './Layout.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
