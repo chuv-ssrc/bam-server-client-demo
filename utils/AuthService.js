@@ -24,14 +24,12 @@ class AuthService {
   }
 
   _doAuthentication(authResult) {
-    console.debug("Logged in:", authResult.idToken);
     this.setToken(authResult.idToken);
     store.dispatch(actions.login(authResult.idToken));
   }
 
   tryLogin() {
     let token = this.getToken();
-    console.debug("Try login:", token, !isTokenExpired(token));
     if (token && !isTokenExpired(token)) {
       store.dispatch(actions.login(token));
     }

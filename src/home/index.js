@@ -4,7 +4,9 @@ import Layout from '../../components/Layout/Layout';
 import css from './styles.css';
 import IgvJs from '../../components/IgvJs';
 import AuthService from '../../utils/AuthService';
+import RestService from '../../utils/RestService';
 import RaisedButton from 'material-ui/RaisedButton';
+import UsersPanel from '../../components/UsersPanel';
 
 
 class HomePage extends React.Component {
@@ -63,7 +65,7 @@ class HomePage extends React.Component {
    * Check that the resource is available to this user before loading.
    */
   viewPrivateBam() {
-    this.checkBamUrl().then(() => {
+    RestService.checkBamUrl('bam/range/testkey').then(() => {
       let options = { ...this.state.options };
       options.locus = "chr1:761997-762551";
       options.tracks.push({
@@ -74,24 +76,6 @@ class HomePage extends React.Component {
         displayMode: 'SQUISHED',  // 'EXPANDED', 'SQUISHED', 'COLLAPSED'
       });
       this.setState({ options });
-    });
-  }
-
-  /**
-   * Check that the user can access this resource (HEAD request).
-   */
-  checkBamUrl() {
-    let url = 'http://localhost:9000/bam/range/testkey';
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer '+ AuthService.getToken());
-    let options = {
-      method: 'HEAD',
-      headers: headers,
-    };
-    return fetch(url, options).then((response) => {
-      //console.log('Authorized:', response);
-    }).catch(function(error) {
-      throw 'Could not connect: ' + JSON.stringify(error, null, 2);
     });
   }
 
@@ -148,9 +132,10 @@ class HomePage extends React.Component {
           <IgvJs options={this.state.options} />
 
         </div>
-        <p>
-          <br/><br/>
-        </p>
+        <p><br/><br/></p>
+
+        <UsersPanel />
+
       </Layout>
     );
   }
