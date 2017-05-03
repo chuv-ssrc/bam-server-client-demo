@@ -29,8 +29,7 @@ class IgvJs extends React.Component {
 
   _copyOptions(options) {
     let optionsCopy = {...options};
-    let tracks = [...options.tracks];
-    optionsCopy.tracks = tracks;
+    optionsCopy.tracks = [...options.tracks];
     return optionsCopy;
   }
 
@@ -47,7 +46,7 @@ class IgvJs extends React.Component {
   }
 
   render() {
-    return <div id='igv-browser'></div>;
+    return <div id='igv-browser' />;
   }
 
 }
