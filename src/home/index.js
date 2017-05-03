@@ -20,27 +20,33 @@ class HomePage extends React.Component {
         genome: "hg19",
         tracks: [
           // Tracks options: https://github.com/igvteam/igv.js/wiki/Tracks
-          // {
-          //   name: "Genes",
-          //   type: "annotation",
-          //   format: "bed",
-          //   sourceType: "file",
-          //   url: "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz",
-          //   indexURL: "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz.tbi",
-          //   order: Number.MAX_VALUE,
-          //   visibilityWindow: 300000000,
-          //   displayMode: "COLLAPSED"
-          // },
+          {
+            name: "Genes",
+            type: "annotation",
+            format: "bed",
+            sourceType: "file",
+            url: "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz",
+            indexURL: "https://s3.amazonaws.com/igv.broadinstitute.org/annotations/hg19/genes/refGene.hg19.bed.gz.tbi",
+            order: Number.MIN_VALUE,
+            visibilityWindow: 300000000,
+            displayMode: "COLLAPSED"
+          },
         ]
       },
 
     }
   }
 
+  /**
+   * If a token is still present in localStorage, check validity and use it to remain connected.
+   */
   componentDidMount() {
     AuthService.tryLogin();
   }
 
+  /**
+   * Load a public bam file, available to everyone, by providing a direct url.
+   */
   viewPublicBam() {
     let options = { ...this.state.options };
     options.locus = "chr8:128,748,000-128,754,000";  // Myc gene
@@ -52,6 +58,10 @@ class HomePage extends React.Component {
     this.setState({ options });
   }
 
+  /**
+   * Load a bam file using bam-server, sending the auth token in the URL.
+   * Check that the resource is available to this user before loading.
+   */
   viewPrivateBam() {
     this.checkBamUrl().then(() => {
       let options = { ...this.state.options };
@@ -67,6 +77,9 @@ class HomePage extends React.Component {
     });
   }
 
+  /**
+   * Check that the user can access this resource (HEAD request).
+   */
   checkBamUrl() {
     let url = 'http://localhost:9000/bam/range/testkey';
     let headers = new Headers();
@@ -82,6 +95,9 @@ class HomePage extends React.Component {
     });
   }
 
+  /**
+   * Clear the tracks.
+   */
   reset() {
     let options = { ...this.state.options };
     options.tracks = [];
@@ -89,7 +105,6 @@ class HomePage extends React.Component {
   }
 
   render() {
-    console.debug(this.state.options.tracks.length)
     return (
       <Layout className={css.content}>
         <div>
