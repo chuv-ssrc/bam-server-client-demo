@@ -19,14 +19,6 @@ class RestService {
     console.debug(error);
   }
 
-  handleJsonResponse(response) {
-
-  }
-
-  handleTextResponse(response) {
-
-  }
-
   ajax(method, path, data) {
     let _this = this;
     let url = this.baseUrl + path;
