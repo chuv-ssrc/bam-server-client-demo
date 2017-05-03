@@ -10,7 +10,7 @@ class AuthService {
   constructor(clientId, domain) {
     this.lock = new Auth0Lock(clientId, domain, {
       auth: {
-        redirectUrl: 'http://localhost:3000/login',
+        redirectUrl: 'http://localhost:3000/',
         responseType: 'token',
         params: {
           scope: "openid name email nickname user_id"
@@ -24,15 +24,14 @@ class AuthService {
   }
 
   _doAuthentication(authResult) {
-    console.debug("Logged in:", authResult.idToken)
+    console.debug("Logged in:", authResult.idToken);
     this.setToken(authResult.idToken);
     store.dispatch(actions.login(authResult.idToken));
-    //browserHistory.replace('/home');   // with react-router. Translate.
   }
 
   tryLogin() {
     let token = this.getToken();
-    console.debug("Try login:", token, !isTokenExpired(token))
+    console.debug("Try login:", token, !isTokenExpired(token));
     if (token && !isTokenExpired(token)) {
       store.dispatch(actions.login(token));
     }

@@ -43,7 +43,7 @@ class HomePage extends React.Component {
   }
 
   viewPublicBam() {
-    let options = this.state.options;
+    let options = { ...this.state.options };
     options.locus = "chr8:128,748,000-128,754,000";  // Myc gene
     options.tracks.push({
       url: 'https://data.broadinstitute.org/igvdata/BodyMap/hg19/IlluminaHiSeq2000_BodySites/brain_merged/accepted_hits.bam',
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
 
   viewPrivateBam() {
     this.checkBamUrl().then((response) => {
-      let options = this.state.options;
+      let options = { ...this.state.options };
       options.locus = "chr1:761997-762551";
       options.tracks.push({
         url: 'localhost:9000/bam/range/testkey',
@@ -82,6 +82,12 @@ class HomePage extends React.Component {
     });
   }
 
+  reset() {
+    let options = { ...this.state.options };
+    options.tracks = [];
+    this.setState({ options });
+  }
+
   render() {
     console.debug(this.state.options.tracks)
     return (
@@ -90,7 +96,7 @@ class HomePage extends React.Component {
 
           { !this.props.loggedIn ?
               <RaisedButton
-                className= {css.button}
+                className={css.button}
                 label="Log in"
                 onClick={AuthService.showLogin}
               />
@@ -103,17 +109,24 @@ class HomePage extends React.Component {
           }
 
           <RaisedButton
-            className= {css.button}
+            className={css.button}
             label="View public BAM"
             primary
             onClick={this.viewPublicBam.bind(this)}
             disabled={!this.props.loggedIn}
           />
           <RaisedButton
-            className= {css.button}
+            className={css.button}
             label="View private BAM"
             secondary
             onClick={this.viewPrivateBam.bind(this)}
+            disabled={!this.props.loggedIn}
+          />
+          <RaisedButton
+            className={css.button}
+            label="Clear"
+            primary
+            onClick={this.reset.bind(this)}
             disabled={!this.props.loggedIn}
           />
           <IgvJs options={this.state.options} />

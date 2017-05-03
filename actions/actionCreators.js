@@ -7,7 +7,7 @@ export function login(jwt) {
   };
 }
 
-export function logout(jwt) {
+export function logout() {
   return {
     type: "LOGOUT",
   };
