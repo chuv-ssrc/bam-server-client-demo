@@ -66,7 +66,7 @@ class HomePage extends React.Component {
    * Check that the resource is available to this user before loading.
    */
   viewPrivateBam() {
-    RestService.checkBamUrl('bam/range/testkey').then(() => {
+    RestService.checkBamUrl('bai/testkey').then(() => {
       let options = { ...this.state.options };
       options.locus = "chr1:761997-762551";
       options.tracks.push({

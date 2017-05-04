@@ -24,6 +24,8 @@ export class Feedback extends React.Component {
               open={!!this.props.status}
               message={<span>{this.props.message}</span>}
               onRequestClose={this.close}
+              autoHideDuration={4000}
+              bodyStyle={{height: '100px'}}
             />
         );
     }

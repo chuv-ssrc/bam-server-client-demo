@@ -9,11 +9,17 @@ import css from './styles.css';
  */
 class UsersPanel extends React.PureComponent {
 
+  addApp() {
+    RestService.addApp("https://jdelafon.eu.auth0.com/", "/", "desc");
+  }
+  removeApp() {
+    RestService.removeApp("https://jdelafon.eu.auth0.com/");
+  }
   addUsers() {
     RestService.addUsers(["A@test.com", "B@test.com"]);
   }
   removeUser() {
-    RestService.removeUser("test@test.com");
+    RestService.removeUser("B@test.com");
   }
   addSample() {
     RestService.addSample("testSample", "someFilePath");
@@ -29,31 +35,45 @@ class UsersPanel extends React.PureComponent {
         <div>
           <RaisedButton
             className={css.button}
-            label="Add user to bam-server"
+            label="Register Auth0 app"
             primary
-            onClick={this.addUsers.bind(this)}
+            onClick={this.addApp.bind(this)}
           />
           <RaisedButton
             className={css.button}
-            label="Remove user from bam-server"
+            label="Remove Auth0 app"
             primary
-            onClick={this.removeUser.bind(this)}
+            onClick={this.removeApp.bind(this)}
           />
         </div>
         <div>
           <RaisedButton
             className={css.button}
-            label="Add sample to bam-server"
+            label="Add users A,B to bam-server"
             primary
-            onClick={this.addSample.bind(this)}
+            onClick={this.addUsers.bind(this)}
           />
           <RaisedButton
             className={css.button}
-            label="Remove sample from bam-server"
+            label="Remove user B from bam-server"
             primary
-            onClick={this.removeSample.bind(this)}
+            onClick={this.removeUser.bind(this)}
           />
         </div>
+        {/*<div>*/}
+          {/*<RaisedButton*/}
+            {/*className={css.button}*/}
+            {/*label="Add sample to bam-server"*/}
+            {/*primary*/}
+            {/*onClick={this.addSample.bind(this)}*/}
+          {/*/>*/}
+          {/*<RaisedButton*/}
+            {/*className={css.button}*/}
+            {/*label="Remove sample from bam-server"*/}
+            {/*primary*/}
+            {/*onClick={this.removeSample.bind(this)}*/}
+          {/*/>*/}
+        {/*</div>*/}
       </div>
     );
   }

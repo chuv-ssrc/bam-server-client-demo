@@ -20,7 +20,10 @@ class RestService {
   handleErrors(response) {
     //console.debug("Response: ", response);
     if (!response.ok) {
-      throw Error("HTTP Error "+ response.status + ": " + response.statusText);  // sends the response to the 'catch' block
+      return response.text().then((errText) => {
+        console.debug(errText)
+        throw Error(response.statusText + ": " + errText);
+      });
     }
     return response;
   }
@@ -49,9 +52,15 @@ class RestService {
    * Check that the user can access this resource (HEAD request).
    */
   checkBamUrl(path) {
-    return this.ajax('HEAD', path);
+    return this.ajax('GET', path);
   }
 
+  addApp(iss, keyFile, description) {
+    return this.ajax('PUT', 'apps', {iss, keyFile, description});
+  }
+  removeApp(iss) {
+    return this.ajax('DELETE', 'apps', {iss});
+  }
   addUsers(usernames) {
     let users = usernames.map((name) => ({username: name}));
     return this.ajax('PUT', 'users', {users: users});
