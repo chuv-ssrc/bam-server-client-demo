@@ -6,8 +6,12 @@ import IgvJs from '../../components/IgvJs';
 import AuthService from '../../utils/AuthService';
 import RestService from '../../utils/RestService';
 import Feedback from '../../utils/Feedback';
-import RaisedButton from 'material-ui/RaisedButton';
 import UsersPanel from '../../components/UsersPanel';
+
+import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
 
 
 class HomePage extends React.Component {
@@ -21,6 +25,7 @@ class HomePage extends React.Component {
         showNavigation: true,
         showRuler: true,
         genome: "hg19",
+        locus: "chr1:761997-762551",
         tracks: [
           // Tracks options: https://github.com/igvteam/igv.js/wiki/Tracks
           {
@@ -52,7 +57,7 @@ class HomePage extends React.Component {
    */
   viewPublicBam() {
     let options = { ...this.state.options };
-    options.locus = "chr8:128,748,000-128,754,000";  // Myc gene
+    options.locus = "chr1:761997-762551";  //"chr8:128,748,000-128,754,000";  // Myc gene
     options.tracks.push({
       url: 'https://data.broadinstitute.org/igvdata/BodyMap/hg19/IlluminaHiSeq2000_BodySites/brain_merged/accepted_hits.bam',
       name: 'Brain (BodyMap)',
@@ -90,6 +95,8 @@ class HomePage extends React.Component {
   }
 
   render() {
+    let dropdownStyle = {display: 'inline-block', verticalAlign: 'bottom', marginBottom: '8px', width: '170px'};
+
     return (
       <Layout className={css.content}>
         <div>
@@ -108,6 +115,16 @@ class HomePage extends React.Component {
               />
           }
 
+          <SelectField floatingLabelText="View public BAM" style={dropdownStyle} >
+            <MenuItem onClick={this.viewPublicBam.bind(this)} value={1} primaryText="brain_merged"></MenuItem>
+            <MenuItem onClick={this.viewPublicBam.bind(this)} value={2} primaryText="brain_merged"></MenuItem>
+          </SelectField>
+          <SelectField floatingLabelText="View private BAM" style={dropdownStyle} >
+            <MenuItem onClick={this.viewPrivateBam.bind(this)} value={1} primaryText="testkey"></MenuItem>
+            <MenuItem onClick={this.viewPrivateBam.bind(this)} value={2} primaryText="testkey"></MenuItem>
+          </SelectField>
+
+          {/*
           <RaisedButton
             className={css.button}
             label="View public BAM"
@@ -122,6 +139,8 @@ class HomePage extends React.Component {
             onClick={this.viewPrivateBam.bind(this)}
             disabled={!this.props.loggedIn}
           />
+          */}
+
           <RaisedButton
             className={css.button}
             label="Clear"

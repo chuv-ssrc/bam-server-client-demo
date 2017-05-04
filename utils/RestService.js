@@ -7,7 +7,6 @@ import { feedback } from '../actions/actionCreators';
 class RestService {
 
   constructor() {
-    this.baseUrl = window.CONFIG.backendUrl;
   }
 
   authHeader() {
@@ -29,7 +28,7 @@ class RestService {
   }
 
   ajax(method, path, data) {
-    let url = this.baseUrl + path;
+    let url = window.CONFIG.backendUrl + path;
     console.info(url + (data ? " > "+ JSON.stringify(data) : ""));
     let options = {
       method: method,
