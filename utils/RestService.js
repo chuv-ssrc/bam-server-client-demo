@@ -1,4 +1,6 @@
 import AuthService from './AuthService';
+import store from '../src/store';
+import { feedback } from '../actions/actionCreators';
 
 
 
@@ -15,28 +17,31 @@ class RestService {
     return headers;
   }
 
-  handleError(error) {
-    console.debug(error);
+  handleErrors(response) {
+    //console.debug("Response: ", response);
+    if (!response.ok) {
+      throw Error("HTTP Error "+ response.status + ": " + response.statusText);  // sends the response to the 'catch' block
+    }
+    return response;
   }
 
   ajax(method, path, data) {
-    let _this = this;
     let url = this.baseUrl + path;
-    console.info(url +" > "+ JSON.stringify(data));
+    console.info(url + (data ? " > "+ JSON.stringify(data) : ""));
     let options = {
       method: method,
       headers: this.authHeader(),
       body: data ? JSON.stringify(data) : undefined,
     };
     return fetch(url, options)
+      .then(this.handleErrors)
       .then((response) => {
-        console.debug(response);
-        return response.text();   // not always! can be text ("Inserted 3 users.")
+        return response;
       })
-      .then((responseData) => {
-        console.debug(responseData);
+      .catch((error) => {
+        store.dispatch(feedback("ERROR", error.message));
+        return Promise.reject();
       })
-      .catch((error) => _this.handleError(error))
     ;
   }
 
@@ -44,14 +49,12 @@ class RestService {
    * Check that the user can access this resource (HEAD request).
    */
   checkBamUrl(path) {
-    return this.ajax('HEAD', path)
-      .catch(function(error) {
-        throw 'Could not connect: ' + JSON.stringify(error, null, 2);
-      });
+    return this.ajax('HEAD', path);
   }
 
-  addUser(username) {
-    return this.ajax('PUT', 'users', {users: [{username: username},]});
+  addUsers(usernames) {
+    let users = usernames.map((name) => ({username: name}));
+    return this.ajax('PUT', 'users', {users: users});
   }
   removeUser(username) {
     return this.ajax('DELETE', 'users', {users: [username]});

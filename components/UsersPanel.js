@@ -9,8 +9,8 @@ import css from './styles.css';
  */
 class UsersPanel extends React.PureComponent {
 
-  addUser() {
-    RestService.addUser("test@test.com");
+  addUsers() {
+    RestService.addUsers(["A@test.com", "B@test.com"]);
   }
   removeUser() {
     RestService.removeUser("test@test.com");
@@ -31,7 +31,7 @@ class UsersPanel extends React.PureComponent {
             className={css.button}
             label="Add user to bam-server"
             primary
-            onClick={this.addUser.bind(this)}
+            onClick={this.addUsers.bind(this)}
           />
           <RaisedButton
             className={css.button}

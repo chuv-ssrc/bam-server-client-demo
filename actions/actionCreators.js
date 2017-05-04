@@ -13,3 +13,11 @@ export function logout() {
   };
 }
 
+export function feedback(status, message) {
+  return {
+    type: "FEEDBACK",
+    status: status,
+    message: message,
+  };
+}
+

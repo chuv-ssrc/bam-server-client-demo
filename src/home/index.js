@@ -5,6 +5,7 @@ import css from './styles.css';
 import IgvJs from '../../components/IgvJs';
 import AuthService from '../../utils/AuthService';
 import RestService from '../../utils/RestService';
+import Feedback from '../../utils/Feedback';
 import RaisedButton from 'material-ui/RaisedButton';
 import UsersPanel from '../../components/UsersPanel';
 
@@ -135,6 +136,8 @@ class HomePage extends React.Component {
         <p><br/><br/></p>
 
         <UsersPanel />
+
+        <Feedback />
 
       </Layout>
     );

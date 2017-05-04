@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { createLogger } from 'redux-logger';
 import authReducers from '../actions/reducers/authReducers';
-
+import feedbackReducers from '../actions/reducers/feedbackReducers';
 
 const logger = createLogger({
   collapsed: true,
@@ -10,8 +10,11 @@ const logger = createLogger({
 
 
 const store = createStore(combineReducers({
-  auth: authReducers,
-}), applyMiddleware(logger));
+    auth: authReducers,
+    feedback: feedbackReducers,
+  }),
+  applyMiddleware(logger)
+);
 
 
 
