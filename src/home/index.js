@@ -62,6 +62,7 @@ class HomePage extends React.Component {
       url: 'https://data.broadinstitute.org/igvdata/BodyMap/hg19/IlluminaHiSeq2000_BodySites/brain_merged/accepted_hits.bam',
       name: 'Brain (BodyMap)',
       displayMode: 'SQUISHED',  // 'EXPANDED', 'SQUISHED', 'COLLAPSED'
+      alignmentRowHeight: 4,
     });
     this.setState({ options });
   }
@@ -70,16 +71,17 @@ class HomePage extends React.Component {
    * Load a bam file using bam-server, sending the auth token in the URL.
    * Check that the resource is available to this user before loading.
    */
-  viewPrivateBam() {
-    RestService.checkBamUrl('bai/testkey').then(() => {
+  viewPrivateBam(sampleName) {
+    RestService.checkBamUrl('bai/sample1').then(() => {
       let options = { ...this.state.options };
       options.locus = "chr1:761997-762551";
       options.tracks.push({
-        url: 'http://localhost:9000/bam/range/testkey?token='+ AuthService.getToken(),
-        indexURL: 'http://localhost:9000/bai/testkey?token='+ AuthService.getToken(),
+        url: 'http://localhost:9000/bam/range/'+ sampleName +'?token='+ AuthService.getToken(),
+        indexURL: 'http://localhost:9000/bai/'+ sampleName +'?token='+ AuthService.getToken(),
         type: "alignment",
-        name: 'Protected resource!!',
+        name: sampleName + ' [Protected resource!!]',
         displayMode: 'SQUISHED',  // 'EXPANDED', 'SQUISHED', 'COLLAPSED'
+        alignmentRowHeight: 4,
       });
       this.setState({ options });
     });
@@ -119,11 +121,10 @@ class HomePage extends React.Component {
 
           <SelectField floatingLabelText="View public BAM" style={dropdownStyle} >
             <MenuItem onClick={this.viewPublicBam.bind(this)} value={1} primaryText="brain_merged"></MenuItem>
-            <MenuItem onClick={this.viewPublicBam.bind(this)} value={2} primaryText="brain_merged"></MenuItem>
           </SelectField>
           <SelectField floatingLabelText="View private BAM" style={dropdownStyle} >
-            <MenuItem onClick={this.viewPrivateBam.bind(this)} value={1} primaryText="testkey"></MenuItem>
-            <MenuItem onClick={this.viewPrivateBam.bind(this)} value={2} primaryText="testkey"></MenuItem>
+            <MenuItem onClick={this.viewPrivateBam.bind(this, "sample1")} value={1} primaryText="sample1"></MenuItem>
+            <MenuItem onClick={this.viewPrivateBam.bind(this, "sample2")} value={2} primaryText="sample2"></MenuItem>
           </SelectField>
 
           {/*
