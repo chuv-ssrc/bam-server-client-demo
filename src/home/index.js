@@ -103,12 +103,14 @@ class HomePage extends React.Component {
 
           { !this.props.loggedIn ?
               <RaisedButton
+                secondary
                 className={css.button}
                 label="Log in"
                 onClick={AuthService.showLogin}
               />
             :
               <RaisedButton
+                secondary
                 className= {css.button}
                 label="Log out"
                 onClick={AuthService.logout}
