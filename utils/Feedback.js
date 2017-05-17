@@ -22,6 +22,7 @@ export class Feedback extends React.Component {
     render() {
         return (
             <Snackbar
+              className={css.snackbar}
               open={!!this.props.status}
               message={<span className={css.message}>{this.props.message}</span>}
               onRequestClose={this.close}

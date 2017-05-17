@@ -11,8 +11,11 @@ class RestService {
 
   authHeader() {
     let headers = new Headers();
-    headers.append('Authorization', 'Bearer '+ AuthService.getToken());
-    headers.append('Content-Type', 'application/json');
+    let token = AuthService.getToken();
+    if (token) {
+      headers.append('Authorization', 'Bearer '+ AuthService.getToken());
+      headers.append('Content-Type', 'application/json');
+    }
     return headers;
   }
 
@@ -21,7 +24,10 @@ class RestService {
     if (!response.ok) {
       return response.text().then((errText) => {
         console.debug(errText)
-        throw Error(response.statusText + ": " + errText);
+        if (response.status === 401) {
+          errText = null;
+        }
+        throw Error(response.statusText + (errText ? ": "+ errText : ""));
       });
     }
     return response;
