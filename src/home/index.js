@@ -149,7 +149,6 @@ class HomePage extends React.Component {
             label="Clear"
             primary
             onClick={this.reset.bind(this)}
-            disabled={!this.props.loggedIn}
           />
 
           <IgvJs options={this.state.options} />
