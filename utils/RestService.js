@@ -41,7 +41,11 @@ class RestService {
         return response;
       })
       .catch((error) => {
-        store.dispatch(feedback("ERROR", error.message));
+        let message = error.message;
+        if (message === "Failed to fetch") {
+          message = "Could not connect to server";
+        }
+        store.dispatch(feedback("ERROR", message));
         return Promise.reject();
       })
     ;

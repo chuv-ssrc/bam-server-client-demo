@@ -1,5 +1,6 @@
 "use strict";
 import React from 'react';
+import css from './feedback.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { feedback } from '../actions/actionCreators';
@@ -22,7 +23,7 @@ export class Feedback extends React.Component {
         return (
             <Snackbar
               open={!!this.props.status}
-              message={<span>{this.props.message}</span>}
+              message={<span className={css.message}>{this.props.message}</span>}
               onRequestClose={this.close}
               autoHideDuration={4000}
               bodyStyle={{height: '100px'}}

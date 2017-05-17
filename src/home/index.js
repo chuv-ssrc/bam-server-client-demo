@@ -157,7 +157,7 @@ class HomePage extends React.Component {
         </div>
         <p><br/><br/></p>
 
-        <UsersPanel />
+        {/*<UsersPanel />*/}
 
         <Feedback />
 
