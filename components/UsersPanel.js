@@ -1,7 +1,9 @@
 import React from 'react';
+import store from '../src/store';
 import RaisedButton from 'material-ui/RaisedButton';
 import RestService from '../utils/RestService';
 import css from './styles.css';
+import { feedback } from '../actions/actionCreators';
 
 
 /**
@@ -10,16 +12,16 @@ import css from './styles.css';
 class UsersPanel extends React.PureComponent {
 
   addApp() {
-    RestService.addApp("https://jdelafon.eu.auth0.com/", "/", "desc");
-  }
-  removeApp() {
-    RestService.removeApp("https://jdelafon.eu.auth0.com/");
+    RestService.addApp("https://jdelafon.eu.auth0.com/", "/", "desc")
+    .then((response) => store.dispatch(feedback("SUCCESS", response)));
   }
   addUsers() {
-    RestService.addUsers(["A@test.com", "B@test.com"]);
+    RestService.addUsers(["a@test.com"])
+    .then((response) => store.dispatch(feedback("SUCCESS", response)));
   }
   removeUser() {
-    RestService.removeUser("B@test.com");
+    RestService.removeUser("a@test.com")
+    .then((response) => store.dispatch(feedback("SUCCESS", response)));
   }
   addSample() {
     RestService.addSample("testSample", "someFilePath");
@@ -39,23 +41,17 @@ class UsersPanel extends React.PureComponent {
             primary
             onClick={this.addApp.bind(this)}
           />
-          <RaisedButton
-            className={css.button}
-            label="Remove Auth0 app"
-            primary
-            onClick={this.removeApp.bind(this)}
-          />
         </div>
         <div>
           <RaisedButton
             className={css.button}
-            label="Add users A,B to bam-server"
+            label="Add user 'a@test.com' to bam-server"
             primary
             onClick={this.addUsers.bind(this)}
           />
           <RaisedButton
             className={css.button}
-            label="Remove user B from bam-server"
+            label="Remove user 'a@test.com' from bam-server"
             primary
             onClick={this.removeUser.bind(this)}
           />

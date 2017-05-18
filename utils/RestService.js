@@ -23,10 +23,6 @@ class RestService {
     //console.debug("Response: ", response);
     if (!response.ok) {
       return response.text().then((errText) => {
-        console.debug(errText)
-        if (response.status === 401) {
-          errText = null;
-        }
         throw Error(response.statusText + (errText ? ": "+ errText : ""));
       });
     }
@@ -44,13 +40,12 @@ class RestService {
     return fetch(url, options)
       .then(this.handleErrors)
       .then((response) => {
-        return response;
+        console.debug(response)
+        return response.text();
       })
       .catch((error) => {
         let message = error.message;
-        if (message === "Failed to fetch") {
-          message = "Could not connect to server";
-        }
+        if (message === "Failed to fetch") { message = "Could not connect to server"; }
         store.dispatch(feedback("ERROR", message));
         return Promise.reject();
       })
@@ -67,18 +62,15 @@ class RestService {
   addApp(iss, keyFile, description) {
     return this.ajax('PUT', 'apps', {iss, keyFile, description});
   }
-  removeApp(iss) {
-    return this.ajax('DELETE', 'apps', {iss});
-  }
   addUsers(usernames) {
-    let users = usernames.map((name) => ({username: name}));
+    let users = usernames.map((name) => ({username: name, isActive: 1}));
     return this.ajax('PUT', 'users', {users: users});
   }
   removeUser(username) {
     return this.ajax('DELETE', 'users', {users: [username]});
   }
   addSample(sampleName, filename) {
-    return this.ajax('PUT', 'samples', {samples: [{name: sampleName, filename: filename}]});
+    return this.ajax('PUT', 'samples', {samples: [{name: sampleName, filename: filename, isActive: 1}]});
   }
   removeSample(sampleName) {
     return this.ajax('DELETE', 'samples', {samples: [sampleName]});

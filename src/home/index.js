@@ -7,6 +7,7 @@ import AuthService from '../../utils/AuthService';
 import RestService from '../../utils/RestService';
 import Feedback from '../../utils/Feedback';
 import UsersPanel from '../../components/UsersPanel';
+import { getUserInfo } from '../../utils/jwtHelper';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
@@ -72,7 +73,7 @@ class HomePage extends React.Component {
    * Check that the resource is available to this user before loading.
    */
   viewPrivateBam(sampleName) {
-    RestService.checkBamUrl('bai/sample1').then(() => {
+    RestService.checkBamUrl('bai/'+sampleName).then(() => {
       let options = { ...this.state.options };
       options.locus = "chr1:761997-762551";
       options.tracks.push({
@@ -98,6 +99,8 @@ class HomePage extends React.Component {
 
   render() {
     let dropdownStyle = {display: 'inline-block', verticalAlign: 'bottom', marginBottom: '8px', width: '170px'};
+    let loggedInAs = this.props.token ?
+      <span>{"Logged in as "}<strong>{getUserInfo(this.props.token)}</strong></span> : null;
 
     return (
       <Layout className={css.content}>
@@ -151,12 +154,14 @@ class HomePage extends React.Component {
             onClick={this.reset.bind(this)}
           />
 
+          {loggedInAs}
+
           <IgvJs options={this.state.options} />
 
         </div>
         <p><br/><br/></p>
 
-        {/*<UsersPanel />*/}
+        <UsersPanel />
 
         <Feedback />
 
@@ -170,6 +175,7 @@ class HomePage extends React.Component {
 function mapStateToProps(state) {
   return {
     loggedIn: state.auth.loggedIn,
+    token: state.auth.token,
   };
 }
 

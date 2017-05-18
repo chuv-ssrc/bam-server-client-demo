@@ -4,7 +4,7 @@ import decode from 'jwt-decode';
  * Source: https://github.com/auth0-samples/auth0-react-sample/blob/master/01-Login/src/utils/jwtHelper.js
  */
 
-export function getTokenExpirationDate(token){
+export function getTokenExpirationDate(token) {
   const decoded = decode(token);
   if (!decoded.exp) {
     return null;
@@ -14,7 +14,7 @@ export function getTokenExpirationDate(token){
   return date;
 }
 
-export function isTokenExpired(token){
+export function isTokenExpired(token) {
   if (!(typeof(token) === "string")) {
     return true;
   }
@@ -24,4 +24,13 @@ export function isTokenExpired(token){
     return false;
   }
   return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
+}
+
+export function getUserInfo(token) {
+  if (!(typeof(token) === "string")) {
+    return "";
+  }
+  const decoded = decode(token);
+  console.debug(decoded);
+  return decoded.name;
 }

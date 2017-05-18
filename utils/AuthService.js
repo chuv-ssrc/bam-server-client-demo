@@ -2,7 +2,7 @@ import React from 'react';
 import store from '../src/store';
 import * as actions from '../actions/actionCreators';
 import Auth0Lock from 'auth0-lock';
-import { isTokenExpired } from './jwtHelper';
+import { isTokenExpired, getUserInfo } from './jwtHelper';
 
 
 class AuthService {
