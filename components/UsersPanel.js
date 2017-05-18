@@ -43,6 +43,8 @@ class UsersPanel extends React.PureComponent {
   render() {
     return (
       <div className={css.usersPanel}>
+
+        {/*
         <div>
           <RaisedButton
             className={css.button}
@@ -51,6 +53,15 @@ class UsersPanel extends React.PureComponent {
             onClick={this.addApp.bind(this)}
           />
         </div>
+        */}
+
+        <p style={{padding: '15px', paddingBottom: '0'}}>
+        Log in as 'admin@test.com' (password: test).
+        With the buttons below, add a user called 'a@test.com' to bam-server and give it access to 'sample1'.
+        Then log out, log in as 'a@test.com' (password: test). You should be able to see 'sample1', but not 'sample2'.
+        Initially, 'a@test.com' could see nothing. User 'admin@test.com' can see both.
+        </p>
+
         <div>
           <RaisedButton
             className={css.button}
@@ -65,20 +76,24 @@ class UsersPanel extends React.PureComponent {
             onClick={this.removeUser.bind(this)}
           />
         </div>
-        {/*<div>*/}
-          {/*<RaisedButton*/}
-            {/*className={css.button}*/}
-            {/*label="Add sample to bam-server"*/}
-            {/*primary*/}
-            {/*onClick={this.addSample.bind(this)}*/}
-          {/*/>*/}
-          {/*<RaisedButton*/}
-            {/*className={css.button}*/}
-            {/*label="Remove sample from bam-server"*/}
-            {/*primary*/}
-            {/*onClick={this.removeSample.bind(this)}*/}
-          {/*/>*/}
-        {/*</div>*/}
+        
+        {/*
+         <div>
+          <RaisedButton
+            className={css.button}
+            label="Add sample to bam-server"
+            primary
+            onClick={this.addSample.bind(this)}
+          />
+          <RaisedButton
+            className={css.button}
+            label="Remove sample from bam-server"
+            primary
+            onClick={this.removeSample.bind(this)}
+          />
+        </div>
+        */}
+
         <div>
           <RaisedButton
             className={css.button}
