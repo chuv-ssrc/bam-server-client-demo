@@ -130,23 +130,6 @@ class HomePage extends React.Component {
             <MenuItem onClick={this.viewPrivateBam.bind(this, "sample2")} value={2} primaryText="sample2"></MenuItem>
           </SelectField>
 
-          {/*
-          <RaisedButton
-            className={css.button}
-            label="View public BAM"
-            primary
-            onClick={this.viewPublicBam.bind(this)}
-            disabled={!this.props.loggedIn}
-          />
-          <RaisedButton
-            className={css.button}
-            label="View private BAM"
-            secondary
-            onClick={this.viewPrivateBam.bind(this)}
-            disabled={!this.props.loggedIn}
-          />
-          */}
-
           <RaisedButton
             className={css.button}
             label="Clear"

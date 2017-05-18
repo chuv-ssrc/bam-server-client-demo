@@ -75,6 +75,12 @@ class RestService {
   removeSample(sampleName) {
     return this.ajax('DELETE', 'samples', {samples: [sampleName]});
   }
+  addAccess(sampleName, username) {
+    return this.ajax('PUT', 'users_samples', {users_samples: [{sample: sampleName, username: username}]});
+  }
+  removeAccess(sampleName, username) {
+    return this.ajax('DELETE', 'users_samples', {users_samples: [{sample: sampleName, username: username}]});
+  }
 
 }
 

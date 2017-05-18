@@ -31,6 +31,5 @@ export function getUserInfo(token) {
     return "";
   }
   const decoded = decode(token);
-  console.debug(decoded);
   return decoded.name;
 }

@@ -13,23 +13,32 @@ class UsersPanel extends React.PureComponent {
 
   addApp() {
     RestService.addApp("https://jdelafon.eu.auth0.com/", "/", "desc")
-    .then((response) => store.dispatch(feedback("SUCCESS", response)));
+    .then((text) => { store.dispatch(feedback("SUCCESS", text)) });
   }
   addUsers() {
     RestService.addUsers(["a@test.com"])
-    .then((response) => store.dispatch(feedback("SUCCESS", response)));
+    .then((text) => { store.dispatch(feedback("SUCCESS", text)) });
   }
   removeUser() {
     RestService.removeUser("a@test.com")
-    .then((response) => store.dispatch(feedback("SUCCESS", response)));
+    .then((text) => { store.dispatch(feedback("SUCCESS", text)) });
   }
   addSample() {
-    RestService.addSample("testSample", "someFilePath");
+    RestService.addSample("testSampleX", "/some/file/path")
+    .then((text) => { store.dispatch(feedback("SUCCESS", text)) });
   }
   removeSample() {
-    RestService.removeSample("testSample", "someFilePath");
+    RestService.removeSample("testSampleX", "/some/file/path")
+    .then((text) => { store.dispatch(feedback("SUCCESS", text)) });
   }
-
+  addAccess() {
+    RestService.addAccess("sample1", "a@test.com")
+    .then((text) => { store.dispatch(feedback("SUCCESS", text)) });
+  }
+  removeAccess() {
+    RestService.removeAccess("sample1", "a@test.com")
+    .then((text) => { store.dispatch(feedback("SUCCESS", text)) });
+  }
 
   render() {
     return (
@@ -70,6 +79,20 @@ class UsersPanel extends React.PureComponent {
             {/*onClick={this.removeSample.bind(this)}*/}
           {/*/>*/}
         {/*</div>*/}
+        <div>
+          <RaisedButton
+            className={css.button}
+            label="Give a@test.com access to sample1"
+            primary
+            onClick={this.addAccess.bind(this)}
+          />
+          <RaisedButton
+            className={css.button}
+            label="Revoke access of a@test.com to sample1"
+            primary
+            onClick={this.removeAccess.bind(this)}
+          />
+        </div>
       </div>
     );
   }
